@@ -1,22 +1,17 @@
-import React from 'react';
-import './index.css';
+import React, { Component } from 'react';
+import './index.css'
+import MapView from './MapView'
 
-class App extends React.Component {
-  componentDidMount() {
-    let map = new window.google.maps.Map(document.getElementById('map'), {
-      center: {lat: 51.5, lng: -0.11},
-      zoom: 12,
-      mapTypeId: 'roadmap',
-    });
-  }
+class App extends Component {
 
   render() {
     return (
-      <div id='app'>
-        <div id='map' />
+      <div id="app">
+        <MapView />
       </div>
-    );
+    )
   }
-};
+
+}
 
 export default App
