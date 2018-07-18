@@ -21,7 +21,9 @@ class App extends Component {
   }
 
   getAllData = () => {
-      this.getData(this.state.searchPlaces[0])
+      for (let i = 0; i < this.state.searchPlaces.length; i++) {
+          this.getData(this.state.searchPlaces[i])
+      }
   }
 
   getData = async (entry) => {
