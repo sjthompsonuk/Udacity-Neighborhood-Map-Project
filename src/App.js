@@ -16,8 +16,13 @@ class App extends Component {
     placesData: []
   }
 
+  tempData = []
+
   componentDidMount() {
       this.getAllData()
+      this.setState({placesData:this.tempData}, function() {
+          // TODO Place anything here we want to occur after set satte has taken effect
+      })
   }
 
   getAllData = () => {
@@ -30,7 +35,13 @@ class App extends Component {
       //API request here and map searchPlaces into placesData
       const api_call = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${entry.search}&key=AIzaSyAQ8K05Bp11d0n6XLbb3eZd5vohjzGqWdU`)
       const data = await api_call.json()
-      console.log(data)
+      if (data.status === "OK") {
+          let item = entry
+          item.latlng = data.results[0].geometry.location
+          this.tempData.push(item)
+      } else {
+          alert(`There was an error with the Google API ${data.status}`)
+      }
   }
 
   render() {
