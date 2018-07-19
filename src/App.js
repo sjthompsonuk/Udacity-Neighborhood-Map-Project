@@ -19,9 +19,6 @@ class App extends Component {
 
   componentDidMount() {
       this.getAllData()
-      //this.setState({placesData:this.tempData}, function() {
-          // TODO Place anything here we want to occur after set state has taken effect
-      //})
   }
 
   getAllData = () => {
@@ -41,7 +38,7 @@ class App extends Component {
           item.latlng = data.results[0].geometry.location
           item.display = true
           this.tempData.push(item)
-          //Check if searches all returned and entered into tempData before setState
+          //Check if searches all returned and entered into tempData before updating App
           if (this.tempData.length === this.state.places.length) {
               this.setState({places:this.tempData})
           }
@@ -54,7 +51,7 @@ class App extends Component {
     return (
       <div id="app">
         <Sidebar places={this.state.places} />
-        <MapView places={this.state.places} />
+        <MapView ref={instance => { this.child = instance; }} places={this.state.places} />
       </div>
     )
   }

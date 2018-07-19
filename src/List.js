@@ -3,14 +3,10 @@ import './index.css'
 
 class List extends Component {
 
-  componentDidMount() {
-      console.log(this.props.place)
-  }
-
   render() {
     return (
       <li className='list'>
-        {this.props.place.title}
+        {this.props.place.latlng.lat}
       </li>
     )
   }
