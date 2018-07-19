@@ -37,9 +37,8 @@ class MapView extends React.Component {
 
         // Create an onclick event to open an infowindow at each marker.
         marker.addListener('click', function() {
-            //console.log(super)
-            console.log(this.super)
-          //populateInfo(this, infoWindow);
+            console.log(this)
+          populateInfo(this, infoWindow);
         })
         this.bounds.extend(this.markers[i].position)
     }
