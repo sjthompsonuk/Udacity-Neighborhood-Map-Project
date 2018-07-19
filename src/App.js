@@ -47,11 +47,25 @@ class App extends Component {
       }
   }
 
+  populateInfoWindow = (marker, infowindow) => {
+    // Check to make sure the infowindow is not already opened on this marker.
+    console.log('populateInfoWindow triggered')
+    if (infowindow.marker != marker) {
+      infowindow.marker = marker
+      infowindow.setContent('<div>' + marker.title + '</div>')
+      infowindow.open(this.map, marker)
+      // Make sure the marker property is cleared if the infowindow is closed.
+      infowindow.addListener('closeclick',function(){
+        infowindow.setMarker = null
+      })
+    }
+  }
+
   render() {
     return (
       <div id="app">
-        <Sidebar places={this.state.places} />
-        <MapView ref={instance => { this.child = instance; }} places={this.state.places} />
+        <Sidebar places={this.state.places} populateInfoWindow={this.populateInfoWindow} />
+        <MapView places={this.state.places} populateInfoWindow={this.populateInfoWindow} />
       </div>
     )
   }
