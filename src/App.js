@@ -6,29 +6,31 @@ import Sidebar from './Sidebar'
 class App extends Component {
 
   state = {
-    searchPlaces: [
+    places: [
         {title: 'The Tower of London', search: 'tower+of+london'},
         {title: 'Big Ben', search: 'big+ben,+london'},
         {title: 'Buckingham Palace', search: 'buckingham+palace,+london'},
         {title: 'The Shard', search: 'the+shard,+london'},
         {title: 'The British Museum', search: 'the+british+museum,+london'}
-    ],
-    placesData: []
+    ]
   }
 
   tempData = []
 
   componentDidMount() {
       this.getAllData()
-      this.setState({placesData:this.tempData}, function() {
-          // TODO Place anything here we want to occur after set satte has taken effect
-      })
+      //this.setState({placesData:this.tempData}, function() {
+          // TODO Place anything here we want to occur after set state has taken effect
+      //})
   }
 
   getAllData = () => {
-      for (let i = 0; i < this.state.searchPlaces.length; i++) {
-          this.getData(this.state.searchPlaces[i])
+      this.tempData = this.state.places
+      console.log(this.tempData)
+      for (let i = 0; i < this.tempData.length; i++) {
+          this.getData(this.tempData[i])
       }
+      this.setState({places:this.tempData})
   }
 
   getData = async (entry) => {
@@ -36,9 +38,7 @@ class App extends Component {
       const api_call = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${entry.search}&key=AIzaSyAQ8K05Bp11d0n6XLbb3eZd5vohjzGqWdU`)
       const data = await api_call.json()
       if (data.status === "OK") {
-          let item = entry
-          item.latlng = data.results[0].geometry.location
-          this.tempData.push(item)
+          entry.latlng = data.results[0].geometry.location
       } else {
           alert(`There was an error with the Google API ${data.status}`)
       }
@@ -47,8 +47,8 @@ class App extends Component {
   render() {
     return (
       <div id="app">
-        <Sidebar />
-        <MapView />
+        <Sidebar places={this.state.places} />
+        <MapView places={this.state.places} />
       </div>
     )
   }
