@@ -25,12 +25,11 @@ class App extends Component {
   }
 
   getAllData = () => {
-      this.tempData = this.state.places
-      console.log(this.tempData)
-      for (let i = 0; i < this.tempData.length; i++) {
-          this.getData(this.tempData[i])
+      //this.tempData = this.state.searchPlaces
+      //console.log(this.tempData)
+      for (let i = 0; i < this.state.places.length; i++) {
+          this.getData(this.state.places[i])
       }
-      this.setState({places:this.tempData})
   }
 
   getData = async (entry) => {
@@ -38,7 +37,14 @@ class App extends Component {
       const api_call = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${entry.search}&key=AIzaSyAQ8K05Bp11d0n6XLbb3eZd5vohjzGqWdU`)
       const data = await api_call.json()
       if (data.status === "OK") {
-          entry.latlng = data.results[0].geometry.location
+          let item = entry
+          item.latlng = data.results[0].geometry.location
+          item.display = true
+          this.tempData.push(item)
+          //Check if searches all returned and entered into tempData before setState
+          if (this.tempData.length === this.state.places.length) {
+              this.setState({places:this.tempData})
+          }
       } else {
           alert(`There was an error with the Google API ${data.status}`)
       }

@@ -10,6 +10,8 @@ class MapView extends React.Component {
     });
   }
 
+  //TODO get markers for each place - subcomponents
+
   render() {
     return (
         <div id='map' />

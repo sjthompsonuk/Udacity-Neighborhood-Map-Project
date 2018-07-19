@@ -1,13 +1,21 @@
 import React, { Component } from 'react';
 import './index.css'
+import List from './List'
 
 class Sidebar extends Component {
+
+  componentDidMount() {
+  }
 
   render() {
     return (
       <div className='sidebar'>
         <ul>
-            //TODO map the places prop to a list for the sidebar - needs unique key too
+            {this.props.places.map(place => (
+              place.display === true &&(
+                <List key={place.search} place={place} />
+              )
+            ))}
         </ul>
       </div>
     )
