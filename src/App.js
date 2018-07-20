@@ -61,7 +61,7 @@ class App extends Component {
     return (
       <div id="app">
         <Sidebar updateActiveMarker={this.updateActiveMarker} activeMarker={this.state.activeMarker} places={this.state.places} populateInfoWindow={this.populateInfoWindow} />
-        <MapView activeMarker={this.state.activeMarker} places={this.state.places} populateInfoWindow={this.populateInfoWindow} />
+        <MapView places={this.state.places} populateInfoWindow={this.populateInfoWindow} />
       </div>
     )
   }

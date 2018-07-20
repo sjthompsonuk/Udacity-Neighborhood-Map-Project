@@ -31,7 +31,7 @@ class MapView extends React.Component {
           map: this.map,
           position: position,
           title: title,
-          animation: window.google.maps.Animation.DROP,
+          //animation: window.google.maps.Animation.DROP,
           id: i
         })
         // Push the marker to our array of markers.
