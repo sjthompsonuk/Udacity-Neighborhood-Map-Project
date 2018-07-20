@@ -12,7 +12,8 @@ class App extends Component {
         {title: 'Buckingham Palace', search: 'buckingham+palace,+london'},
         {title: 'The Shard', search: 'the+shard,+london'},
         {title: 'The British Museum', search: 'the+british+museum,+london'}
-    ]
+    ],
+    activeMarkerTitle: []
   }
 
   tempData = []
@@ -47,25 +48,11 @@ class App extends Component {
       }
   }
 
-  populateInfoWindow = (marker, infowindow) => {
-    // Check to make sure the infowindow is not already opened on this marker.
-    console.log('populateInfoWindow triggered')
-    if (infowindow.marker != marker) {
-      infowindow.marker = marker
-      infowindow.setContent('<div>' + marker.title + '</div>')
-      infowindow.open(this.map, marker)
-      // Make sure the marker property is cleared if the infowindow is closed.
-      infowindow.addListener('closeclick',function(){
-        infowindow.setMarker = null
-      })
-    }
-  }
-
   render() {
     return (
       <div id="app">
         <Sidebar places={this.state.places} populateInfoWindow={this.populateInfoWindow} />
-        <MapView places={this.state.places} populateInfoWindow={this.populateInfoWindow} />
+        <MapView activeMarkerTitle={this.state.activeMarkerTitle} places={this.state.places} populateInfoWindow={this.populateInfoWindow} />
       </div>
     )
   }

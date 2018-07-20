@@ -9,11 +9,14 @@ class MapView extends React.Component {
   // This has received new places props from parent so...WillReceiveProps lifecycle event
   componentWillReceiveProps() {
 
+      // Define self to allow it to be used within 'addEventListener'
+      const self = this
+
       //this.infoWindow = new window.google.maps.InfoWindow();
 
       // The following group uses the location array to create an array of markers on initialize.
 
-     this.infoWindow = new window.google.maps.InfoWindow();
+     this.infowindow = new window.google.maps.InfoWindow();
      this.bounds = new window.google.maps.LatLngBounds();
 
       for (let i = 0; i < this.props.places.length; i++) {
@@ -37,8 +40,7 @@ class MapView extends React.Component {
 
         // Create an onclick event to open an infowindow at each marker.
         marker.addListener('click', function() {
-            console.log(this)
-          populateInfo(this, infoWindow);
+            self.activateMarker(this)
         })
         this.bounds.extend(this.markers[i].position)
     }
@@ -47,20 +49,18 @@ class MapView extends React.Component {
 
   }
 
-  populateInfo = () => {
-      //console.log('clicked')
-     // console.log(this)
-      //console.log(marker)
-    // Check to make sure the infowindow is not already opened on this marker.
-    //if (this.infoWindow.marker != marker) {
-     // this.infoWindow.marker = marker;
-    //  this.infoWindow.setContent('<div>' + marker.title + '</div>');
-    //  this.infoWindow.open(this.map, marker);
-      // Make sure the marker property is cleared if the infowindow is closed.
-    //  this.infoWindow.addListener('closeclick',function(){
-    //    this.infoWindow.setMarker = null;
-    //  });
-    //}
+  activateMarker = (marker) => {
+      console.log('activateMarker triggered')
+      if (this.infowindow.marker != marker) {
+        this.infowindow.marker = marker
+        this.infowindow.setContent('<div>' + marker.title + '</div>')
+        this.infowindow.open(this.map, marker)
+        // Make sure the marker property is cleared if the infowindow is closed.
+        const self = this
+        this.infowindow.addListener('closeclick',function(){
+          self.infowindow.setMarker = null
+        })
+      }
   }
 
   componentDidMount() {
