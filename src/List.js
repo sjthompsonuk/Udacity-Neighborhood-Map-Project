@@ -5,7 +5,6 @@ class List extends Component {
 
   listClick = (e) => {
       this.props.updateActiveMarker(this.props.place.id)
-      console.log(this.props.place.id)
   }
 
   render() {

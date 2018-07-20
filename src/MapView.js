@@ -18,8 +18,6 @@ class MapView extends React.Component {
       }
       this.markers = []
 
-      //this.infoWindow = new window.google.maps.InfoWindow();
-
       // The following group uses the location array to create an array of markers on initialize.
 
       for (let i = 0; i < nextProps.places.length; i++) {
@@ -70,7 +68,7 @@ class MapView extends React.Component {
 
       if (id !== null) {
           let marker = this.markers[id]
-          if (this.infowindow.marker != marker) {
+          if (this.infowindow.marker !== marker) {
             this.infowindow.marker = marker
             this.infowindow.setContent('<div>' + marker.title + '</div>')
             this.infowindow.open(this.map, marker)

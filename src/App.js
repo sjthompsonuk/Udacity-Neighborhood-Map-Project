@@ -46,7 +46,6 @@ class App extends Component {
   }
 
   getAllData = () => {
-      //this.tempData = this.state.searchPlaces
       for (let i = 0; i < this.state.places.length; i++) {
           this.getData(this.state.places[i])
       }
@@ -60,7 +59,6 @@ class App extends Component {
           let item = entry
           item.latlng = data.results[0].geometry.location
           item.display = true
-          item.id
           this.tempData.push(item)
           //Check if searches all returned and entered into tempData before updating App
           if (this.tempData.length === this.state.places.length) {
