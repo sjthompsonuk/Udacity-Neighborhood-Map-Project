@@ -4,7 +4,6 @@ import './index.css';
 class MapView extends React.Component {
     //Acts like the google maps callback init function
 
-
   markers = []
   // This has received new places props from parent so...WillReceiveProps lifecycle event
   componentWillReceiveProps(nextProps) {
@@ -16,8 +15,7 @@ class MapView extends React.Component {
 
       // The following group uses the location array to create an array of markers on initialize.
 
-     this.infowindow = new window.google.maps.InfoWindow();
-     this.bounds = new window.google.maps.LatLngBounds();
+
 
       for (let i = 0; i < nextProps.places.length; i++) {
         // Get the position from the location array.
@@ -58,17 +56,25 @@ class MapView extends React.Component {
 
   openInfoWindow = (id) => {
 
-      let marker = this.markers[id]
-      if (this.infowindow.marker != marker) {
-        this.infowindow.marker = marker
-        this.infowindow.setContent('<div>' + marker.title + '</div>')
-        this.infowindow.open(this.map, marker)
-        // Make sure the marker property is cleared if the infowindow is closed.
-        const self = this
-        this.infowindow.addListener('closeclick',function(){
-          self.infowindow.setMarker = null
-          self.props.updateActiveMarker(null)
-        })
+      if (id !== null) {
+
+          let marker = this.markers[id]
+          if (this.infowindow.marker != marker) {
+            this.infowindow.marker = marker
+            this.infowindow.setContent('<div>' + marker.title + '</div>')
+            this.infowindow.open(this.map, marker)
+            // Make sure the marker property is cleared if the infowindow is closed.
+            const self = this
+            this.infowindow.addListener('closeclick',function(){
+              self.infowindow.setMarker = null
+              self.props.updateActiveMarker(null)
+              console.log('closing...')
+              console.log()
+            })
+            console.log('opening...')
+            console.log(this.infowindow)
+          }
+
       }
   }
 
@@ -80,8 +86,8 @@ class MapView extends React.Component {
       mapTypeId: 'roadmap',
     })
 
-    //this.infoWindow = new window.google.maps.InfoWindow()
-    //this.bounds = new window.google.maps.LatLngBounds()
+    this.infowindow = new window.google.maps.InfoWindow()
+    this.bounds = new window.google.maps.LatLngBounds()
 
   }
 
