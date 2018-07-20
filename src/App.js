@@ -13,10 +13,14 @@ class App extends Component {
         {title: 'The Shard', search: 'the+shard,+london'},
         {title: 'The British Museum', search: 'the+british+museum,+london'}
     ],
-    activeMarkerTitle: []
+    activeMarker: null
   }
 
   tempData = []
+
+  updateActiveMarker = (id) => {
+      this.setState({activeMarker:id})
+  }
 
   componentDidMount() {
       this.getAllData()
@@ -38,9 +42,14 @@ class App extends Component {
           let item = entry
           item.latlng = data.results[0].geometry.location
           item.display = true
+          item.id
           this.tempData.push(item)
           //Check if searches all returned and entered into tempData before updating App
           if (this.tempData.length === this.state.places.length) {
+              //Tag items with id number matching order in array (to match marker id)
+              for (let i =0; i < this.tempData.length; i++) {
+                  this.tempData[i].id = i
+              }
               this.setState({places:this.tempData})
           }
       } else {
@@ -51,8 +60,8 @@ class App extends Component {
   render() {
     return (
       <div id="app">
-        <Sidebar places={this.state.places} populateInfoWindow={this.populateInfoWindow} />
-        <MapView activeMarkerTitle={this.state.activeMarkerTitle} places={this.state.places} populateInfoWindow={this.populateInfoWindow} />
+        <Sidebar updateActiveMarker={this.updateActiveMarker} activeMarker={this.state.activeMarker} places={this.state.places} populateInfoWindow={this.populateInfoWindow} />
+        <MapView activeMarker={this.state.activeMarker} places={this.state.places} populateInfoWindow={this.populateInfoWindow} />
       </div>
     )
   }

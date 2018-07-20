@@ -3,10 +3,14 @@ import './index.css'
 
 class List extends Component {
 
+  listClick = (e) => {
+      this.props.updateActiveMarker(this.props.place.id)
+  }
+
   render() {
     return (
-      <li className='list'>
-        {this.props.place.latlng.lat}
+      <li className='list' onClick={this.listClick}>
+        {this.props.place.title}
       </li>
     )
   }

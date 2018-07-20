@@ -13,7 +13,7 @@ class Sidebar extends Component {
         <ul>
             {this.props.places.map(place => (
               place.display === true &&(
-                <List key={place.search} place={place} />
+                <List key={place.search} updateActiveMarker={this.props.updateActiveMarker} activeMarker={this.props.activeMarker} place={place} />
               )
             ))}
         </ul>
