@@ -26,7 +26,6 @@ class App extends Component {
       this.tempData = this.state.places
       for (let i = 0; i < this.tempData.length; i++) {
           this.tempData[i].display = (this.tempData[i].title.toLowerCase().includes(query)) ? true : false
-          console.log(this.tempData[i].display)
       }
       this.setState({places:this.tempData})
   }
