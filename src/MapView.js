@@ -12,7 +12,9 @@ class MapView extends React.Component {
       // Define self to allow it to be used within 'addEventListener'
       const self = this
       for (let i = 0; i < this.markers.length; i++) {
-          this.markers[i].setMap(null)
+          if (this.markers[i].ghost === false) {
+              this.markers[i].setMap(null)
+          }
       }
       this.markers = []
 
@@ -25,20 +27,19 @@ class MapView extends React.Component {
         if (nextProps.places[i].display === true) {
             // Get the position from the location array.
             let position = nextProps.places[i].latlng
-            //console.log(this.props.places[i])
-            //console.log(this.props.places[i].latlng)
             let title = nextProps.places[i].title
-            //console.log(this.props.places[i].title)
             // Create a marker per location, and put into markers array.
             let marker = new window.google.maps.Marker({
               map: this.map,
               position: position,
               title: title,
               //animation: window.google.maps.Animation.DROP,
-              id: i
+              id: i,
+              //ghost property to keep same length marker array for list matching
+              ghost: false
             })
             // Push the marker to our array of markers.
-            this.markers.push(marker);
+            this.markers.push(marker)
 
 
             // Create an onclick event to open an infowindow at each marker.
@@ -46,16 +47,18 @@ class MapView extends React.Component {
                 self.activateMarker(this)
             })
             this.bounds.extend(nextProps.places[i].latlng)
+        } else {
+            let marker = {ghost: true}
+            this.markers.push(marker)
         }
 
     }
 
-    console.log(this.markers)
-
       //Extend the boundaries of the map for each marker
     this.map.fitBounds(this.bounds)
 
-    // TODO When active marker id changes in parent state it is passed as new prop. Then populate the infowindow
+    // When active marker id changes in parent state it is passed as new prop. Then populate the infowindow
+
     this.openInfoWindow(nextProps.activeMarker)
   }
 
@@ -66,7 +69,6 @@ class MapView extends React.Component {
   openInfoWindow = (id) => {
 
       if (id !== null) {
-
           let marker = this.markers[id]
           if (this.infowindow.marker != marker) {
             this.infowindow.marker = marker
@@ -77,13 +79,8 @@ class MapView extends React.Component {
             this.infowindow.addListener('closeclick',function(){
               self.infowindow.setMarker = null
               self.props.updateActiveMarker(null)
-              console.log('closing...')
-              console.log()
             })
-            console.log('opening...')
-            console.log(this.infowindow)
           }
-
       }
   }
 
@@ -94,11 +91,6 @@ class MapView extends React.Component {
       zoom: 12,
       mapTypeId: 'roadmap',
     })
-    // Clear all markers
-    //for (let i = 0; i < this.markers.length; i++) {
-    //    this.markers[i].setMap(null)
-    //}
-    //this.markers = []
 
     this.infowindow = new window.google.maps.InfoWindow()
     this.bounds = new window.google.maps.LatLngBounds()

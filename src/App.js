@@ -22,7 +22,10 @@ class App extends Component {
   tempData = []
 
   updateQuery = (query) => {
-      this.setState({query})
+      this.setState({
+          query,
+          activeMarker:null
+      })
       this.tempData = this.state.places
       for (let i = 0; i < this.tempData.length; i++) {
           this.tempData[i].display = (this.tempData[i].title.toLowerCase().includes(query)) ? true : false
@@ -44,7 +47,6 @@ class App extends Component {
 
   getAllData = () => {
       //this.tempData = this.state.searchPlaces
-      //console.log(this.tempData)
       for (let i = 0; i < this.state.places.length; i++) {
           this.getData(this.state.places[i])
       }
