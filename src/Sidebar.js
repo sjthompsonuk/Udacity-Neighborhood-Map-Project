@@ -11,7 +11,7 @@ class Sidebar extends Component {
   render() {
     return (
       <div className='sidebar'>
-        <Filter places={this.props.places}/>
+        <Filter query={this.props.query} updateQuery={this.props.updateQuery} places={this.props.places}/>
         <ul>
             {this.props.places.map(place => (
               place.display === true &&(

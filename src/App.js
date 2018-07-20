@@ -13,10 +13,15 @@ class App extends Component {
         {title: 'The Shard', search: 'the+shard,+london'},
         {title: 'The British Museum', search: 'the+british+museum,+london'}
     ],
-    activeMarker: null
+    activeMarker: null,
+    query: ''
   }
 
   tempData = []
+
+  updateQuery = (query) => {
+      this.setState({query})
+  }
 
   updateActiveMarker = (id) => {
       if (this.state.activeMarker === id) {
@@ -64,7 +69,7 @@ class App extends Component {
   render() {
     return (
       <div id="app">
-        <Sidebar updateActiveMarker={this.updateActiveMarker} places={this.state.places} populateInfoWindow={this.populateInfoWindow} />
+        <Sidebar query={this.state.query} updateQuery={this.updateQuery} updateActiveMarker={this.updateActiveMarker} places={this.state.places} populateInfoWindow={this.populateInfoWindow} />
         <MapView activeMarker={this.state.activeMarker} updateActiveMarker={this.updateActiveMarker} places={this.state.places} populateInfoWindow={this.populateInfoWindow} />
       </div>
     )

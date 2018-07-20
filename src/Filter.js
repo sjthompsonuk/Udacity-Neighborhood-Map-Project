@@ -3,18 +3,16 @@ import './index.css'
 
 class Filter extends Component {
 
-  state = {
-      query: ''
-  }
-
   filter = (e) => {
-      this.setState({query:e.target.value})
+      this.props.updateQuery(e.target.value)
+      // TODO Organise how to filter the places state in App and rerender
+
   }
 
   render() {
     return (
         <div>
-          <input type="text" placeholder="Filter List" value={this.state.query} onChange={this.filter}/>
+          <input type="text" placeholder="Filter List" value={this.props.query} onChange={this.filter}/>
         </div>
     )
   }
