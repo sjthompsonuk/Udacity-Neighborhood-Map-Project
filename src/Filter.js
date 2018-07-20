@@ -4,9 +4,7 @@ import './index.css'
 class Filter extends Component {
 
   filter = (e) => {
-      this.props.updateQuery(e.target.value)
-      // TODO Organise how to filter the places state in App and rerender
-
+      this.props.updateQuery(e.target.value.toLowerCase())
   }
 
   render() {

@@ -6,6 +6,8 @@ import Sidebar from './Sidebar'
 class App extends Component {
 
   state = {
+
+     // TODO turn this to JSON?
     places: [
         {title: 'The Tower of London', search: 'tower+of+london'},
         {title: 'Big Ben', search: 'big+ben,+london'},
@@ -21,6 +23,12 @@ class App extends Component {
 
   updateQuery = (query) => {
       this.setState({query})
+      this.tempData = this.state.places
+      for (let i = 0; i < this.tempData.length; i++) {
+          this.tempData[i].display = (this.tempData[i].title.toLowerCase().includes(query)) ? true : false
+          console.log(this.tempData[i].display)
+      }
+      this.setState({places:this.tempData})
   }
 
   updateActiveMarker = (id) => {
