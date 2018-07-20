@@ -7,7 +7,7 @@ class MapView extends React.Component {
 
   markers = []
   // This has received new places props from parent so...WillReceiveProps lifecycle event
-  componentWillReceiveProps() {
+  componentWillReceiveProps(nextProps) {
 
       // Define self to allow it to be used within 'addEventListener'
       const self = this
@@ -19,12 +19,12 @@ class MapView extends React.Component {
      this.infowindow = new window.google.maps.InfoWindow();
      this.bounds = new window.google.maps.LatLngBounds();
 
-      for (let i = 0; i < this.props.places.length; i++) {
+      for (let i = 0; i < nextProps.places.length; i++) {
         // Get the position from the location array.
-        let position = this.props.places[i].latlng
+        let position = nextProps.places[i].latlng
       //console.log(this.props.places[i])
         //console.log(this.props.places[i].latlng)
-        let title = this.props.places[i].title
+        let title = nextProps.places[i].title
         //console.log(this.props.places[i].title)
         // Create a marker per location, and put into markers array.
         let marker = new window.google.maps.Marker({
@@ -44,13 +44,21 @@ class MapView extends React.Component {
         })
         this.bounds.extend(this.markers[i].position)
     }
-      // TODO ?? Extend the boundaries of the map for each marker
+
+      //Extend the boundaries of the map for each marker
     this.map.fitBounds(this.bounds)
 
+    // TODO When active marker id changes in parent state it is passed as new prop. Then populate the infowindow
+      this.openInfoWindow(nextProps.activeMarker)
   }
 
   activateMarker = (marker) => {
-      console.log('activateMarker triggered')
+      this.props.updateActiveMarker(marker.id)
+  }
+
+  openInfoWindow = (id) => {
+
+      let marker = this.markers[id]
       if (this.infowindow.marker != marker) {
         this.infowindow.marker = marker
         this.infowindow.setContent('<div>' + marker.title + '</div>')
@@ -59,6 +67,7 @@ class MapView extends React.Component {
         const self = this
         this.infowindow.addListener('closeclick',function(){
           self.infowindow.setMarker = null
+          self.props.updateActiveMarker(null)
         })
       }
   }

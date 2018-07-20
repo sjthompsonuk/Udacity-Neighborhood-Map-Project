@@ -19,7 +19,11 @@ class App extends Component {
   tempData = []
 
   updateActiveMarker = (id) => {
-      this.setState({activeMarker:id})
+      if (this.state.activeMarker === id) {
+          this.setState({activeMarker:null})
+      } else {
+          this.setState({activeMarker:id})
+      }
   }
 
   componentDidMount() {
@@ -60,8 +64,8 @@ class App extends Component {
   render() {
     return (
       <div id="app">
-        <Sidebar updateActiveMarker={this.updateActiveMarker} activeMarker={this.state.activeMarker} places={this.state.places} populateInfoWindow={this.populateInfoWindow} />
-        <MapView places={this.state.places} populateInfoWindow={this.populateInfoWindow} />
+        <Sidebar updateActiveMarker={this.updateActiveMarker} places={this.state.places} populateInfoWindow={this.populateInfoWindow} />
+        <MapView activeMarker={this.state.activeMarker} updateActiveMarker={this.updateActiveMarker} places={this.state.places} populateInfoWindow={this.populateInfoWindow} />
       </div>
     )
   }
