@@ -83,9 +83,13 @@ class MapView extends React.Component {
   }
 
   createContentString = (id) => {
+      //TODO image attribute, wiki/google)
       let place = this.props.places[id]
       let contentString = ''
-      contentString += `<div>${place.title}</div>`
+      contentString += `<div><img alt="picture of ${place.urlTitle}" src=${place.urlImage}></div>`
+      contentString += `<div>${place.urlTitle}</div>`
+      contentString += `<div>${place.description}</div>`
+
       return (contentString)
   }
 

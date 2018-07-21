@@ -116,7 +116,6 @@ class App extends Component {
   getAdditionalWikiData = async () => {
       //Make search string
       let search = 'https://en.wikipedia.org/w/api.php?action=query&origin=*&prop=pageimages|description&format=json&formatversion=2&pageids='
-      console.log(this.tempWikiData)
       for (let i = 0; i < this.tempWikiData.length; i++) {
           search = search + this.tempWikiData[i].pageid
           if (i < (this.tempWikiData.length - 1)) {
@@ -126,8 +125,7 @@ class App extends Component {
       console.log(search)
       //do async API request
       try {
-          const api_call = await fetch(`${search}`, {
-          })
+          const api_call = await fetch(`${search}`)
           let data = await api_call.json()
 
           // Loop through all items in the tempWikiData which is indexed by PLACE title (not wikipedia page titles which may be similar/same), to add remaining data.
@@ -140,26 +138,50 @@ class App extends Component {
                   if (page.pageid === num) {
                       item.urlTitle = page.title
                       item.description = page.description
-                      item.urlImage = page.pageimage
+                      item.image = page.pageimage
                   }
               }
-
           }
-          console.log(this.tempWikiData)
-
-          // Dont allow to setState until wiki also ready then do together
-          this.wikiComplete = true
-          if (this.googleComplete === true) {
-              console.log('google api finished first')
-              this.mergeApiData()
-          }
+          this.addWikiMediaImagesAll()
 
       } catch (error) {console.log(error)}
       //TODO add better error handling
   }
 
+  addWikiMediaImagesAll = () => {
+      for (let i = 0; i < this.tempWikiData.length; i++) {
+          this.addWikiMediaImages(this.tempWikiData[i])
+      }
+  }
+
+  addWikiMediaImages = async (item) => {
+      //Make search string
+      // File:The_Shard_in_March_2017_(cropped).jpg
+      let search = 'https://commons.wikimedia.org/w/api.php?action=query&format=json&origin=*&prop=imageinfo&iiprop=url|extmetadata&titles=File:'
+      try {
+          const api_call = await fetch(search + item.image)
+          let data = await api_call.json()
+          for (let key in data.query.pages) {
+              item.urlImage = data.query.pages[key].imageinfo[0].url
+              item.credit = data.query.pages[key].imageinfo[0].extmetadata.Artist.value
+          }
+          this.wikiDataCount += 1
+          if (this.wikiDataCount === this.tempWikiData.length) {
+              this.wikiDataCount = 0
+              this.wikiComplete = true
+              if (this.googleComplete === true) {
+                  console.log('google api finsihed first')
+                  this.mergeApiData()
+              }
+          }
+
+      } catch (error) {console.log(error)}
+      //TODO improve error handling
+
+  }
+
   mergeApiData = () => {
-      //TODO will be called when both this.tempData array and this.tempWikiData objects are ready for merging and seting state.
+      //will be called when both this.tempData array and this.tempWikiData objects are ready for merging and seting state.
       this.wikiComplete = false
       this.googleComplete = false
       //TODO change below
@@ -174,6 +196,8 @@ class App extends Component {
                   googleItem.description = wikiItem.description
                   googleItem.urlImage = wikiItem.urlImage
                   googleItem.urlTitle = wikiItem.urlTitle
+                  googleItem.image = wikiItem.image
+                  googleItem.credit = wikiItem.credit
               }
           }
       }
