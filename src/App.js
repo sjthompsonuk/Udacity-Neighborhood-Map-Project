@@ -180,7 +180,7 @@ class App extends Component {
               }
           }
       }
-      console.log(this.tempData)
+      this.setState({places:this.tempData})
   }
 
   render() {
