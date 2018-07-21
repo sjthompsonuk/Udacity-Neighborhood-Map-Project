@@ -12,7 +12,10 @@ class App extends Component {
         {title: 'Big Ben'},
         {title: 'Buckingham Palace'},
         {title: 'The Shard'},
-        {title: 'The British Museum London'}
+        {title: 'The British Museum London'},
+        {title: 'London Bridge'},
+        {title: 'The Ritz in London'},
+        {title: 'The Savoy in London'}
     ],
     activeMarker: null,
     query: ''
@@ -157,12 +160,12 @@ class App extends Component {
   addWikiMediaImages = async (item) => {
       //Make search string
       // File:The_Shard_in_March_2017_(cropped).jpg
-      let search = 'https://commons.wikimedia.org/w/api.php?action=query&format=json&origin=*&prop=imageinfo&iiprop=url|extmetadata&titles=File:'
+      let search = 'https://commons.wikimedia.org/w/api.php?action=query&format=json&origin=*&prop=imageinfo&iiurlwidth=200&iiprop=url|extmetadata&titles=File:'
       try {
           const api_call = await fetch(search + item.image)
           let data = await api_call.json()
           for (let key in data.query.pages) {
-              item.urlImage = data.query.pages[key].imageinfo[0].url
+              item.urlImage = data.query.pages[key].imageinfo[0].thumburl
               item.credit = data.query.pages[key].imageinfo[0].extmetadata.Artist.value
           }
           this.wikiDataCount += 1
