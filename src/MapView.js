@@ -70,7 +70,7 @@ class MapView extends React.Component {
           let marker = this.markers[id]
           if (this.infowindow.marker !== marker) {
             this.infowindow.marker = marker
-            this.infowindow.setContent('<div>' + marker.title + '</div>')
+            this.infowindow.setContent(this.createContentString(id))
             this.infowindow.open(this.map, marker)
             // Make sure the marker property is cleared if the infowindow is closed.
             const self = this
@@ -80,6 +80,13 @@ class MapView extends React.Component {
             })
           }
       }
+  }
+
+  createContentString = (id) => {
+      let place = this.props.places[id]
+      let contentString = ''
+      contentString += `<div>${place.title}</div>`
+      return (contentString)
   }
 
   componentDidMount() {

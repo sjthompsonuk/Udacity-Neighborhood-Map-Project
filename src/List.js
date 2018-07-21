@@ -10,7 +10,7 @@ class List extends Component {
   render() {
     return (
       <li className='list' onClick={this.listClick}>
-        {this.props.place.title}
+        {this.props.place.urlTitle}
       </li>
     )
   }
