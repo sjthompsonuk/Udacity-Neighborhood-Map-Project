@@ -7,15 +7,12 @@ class App extends Component {
 
   state = {
 
-     // TODO turn this to JSON?
-
-     // TODO Add info from Wiki or FourSquare for infoWindow
     places: [
-        {title: 'The Tower of London', search: 'tower+of+london'},
-        {title: 'Big Ben', search: 'big+ben,+london'},
-        {title: 'Buckingham Palace', search: 'buckingham+palace,+london'},
-        {title: 'The Shard', search: 'the+shard,+london'},
-        {title: 'The British Museum', search: 'the+british+museum,+london'}
+        {title: 'The Tower of London'},
+        {title: 'Big Ben'},
+        {title: 'Buckingham Palace'},
+        {title: 'The Shard'},
+        {title: 'The British Museum'}
     ],
     activeMarker: null,
     query: ''
@@ -68,7 +65,7 @@ class App extends Component {
   //Google API requests
   getData = async (entry) => {
       //API request here and map searchPlaces into placesData
-      const api_call = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${entry.search}&key=AIzaSyAQ8K05Bp11d0n6XLbb3eZd5vohjzGqWdU`)
+      const api_call = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${entry.title}&key=AIzaSyAQ8K05Bp11d0n6XLbb3eZd5vohjzGqWdU`)
       const data = await api_call.json()
       if (data.status === "OK") {
           let item = entry
