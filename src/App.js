@@ -104,7 +104,6 @@ class App extends Component {
           item.pageid = data.query.search[0].pageid
           entry = item
           this.wikiDataCount += 1
-          console.log(this.tempWikiData)
           //once all item pageids found run full data pull
           if (this.wikiDataCount === this.state.places.length) {
               this.wikiDataCount = 0
@@ -136,19 +135,13 @@ class App extends Component {
 
           // Loop through all items in the tempWikiData which is indexed by PLACE title (not wikipedia page titles which may be similar/same), to add remaining data.
           //TODO make this update the tempWikiData object correctly
-          console.log(data)
-          console.log(this.tempWikiData)
           for (let i = 0; i < this.tempWikiData.length; i++) {
               let item = this.tempWikiData[i]
               let num = item.pageid
-              console.log(num)
-              for (let i = 0; i < data.query.pages.length; i++) {
-                  let page = data.query.pages[i]
-                  console.log(page)
-                  console.log(page.pageid)
+              for (let j = 0; j < data.query.pages.length; j++) {
+                  let page = data.query.pages[j]
                   if (page.pageid === num) {
                       item.urlTitle = page.title
-                      console.log(page.title)
                       item.description = page.description
                       item.urlImage = page.pageimage
                   }
@@ -157,17 +150,12 @@ class App extends Component {
           }
           console.log(this.tempWikiData)
 
-
-
           // Dont allow to setState until wiki also ready then do together
           this.wikiComplete = true
           if (this.googleComplete === true) {
               console.log('google api finished first')
               this.mergeApiData()
           }
-
-
-
 
       } catch (error) {console.log(error)}
       //TODO add better error handling
@@ -177,10 +165,22 @@ class App extends Component {
       //TODO will be called when both this.tempData array and this.tempWikiData objects are ready for merging and seting state.
       this.wikiComplete = false
       this.googleComplete = false
-//TODO change below
-      //console.log(data)
-      //console.log(this.tempWikiData)
-
+      //TODO change below
+      console.log(this.tempData)
+      console.log(this.tempWikiData)
+      for (let i = 0; i < this.tempData.length; i++) {
+          let googleItem = this.tempData[i]
+          for (let j = 0; j < this.tempWikiData.length; j++) {
+              let wikiItem = this.tempWikiData[j]
+              if (googleItem.title === wikiItem.title) {
+                  googleItem.pageid = wikiItem.pageid
+                  googleItem.description = wikiItem.description
+                  googleItem.urlImage = wikiItem.urlImage
+                  googleItem.urlTitle = wikiItem.urlTitle
+              }
+          }
+      }
+      console.log(this.tempData)
   }
 
   render() {
