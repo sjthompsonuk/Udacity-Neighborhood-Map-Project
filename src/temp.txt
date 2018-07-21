@@ -1,0 +1,21 @@
+https://en.wikipedia.org/w/api.php?action=query&format=json&prop=pageimages|description&pageids=4675
+
+https://en.wikipedia.org/w/api.php?action=query&list=search&srlimit=1&format=json&srsearch=the%20british%20museum
+
+Can pipe requests for pageids but dont do it on the search
+
+image link follows pattern:
+http://en.wikipedia.org/wiki/File:{image name}
+
+site url can be used assuming auto space fill:
+https://en.wikipedia.org/wiki/{title}
+
+want to collect:
+-page id only from specsearch
+
+then
+
+from query for each page id
+-title (for url) save as property url!!
+-image name
+-description
