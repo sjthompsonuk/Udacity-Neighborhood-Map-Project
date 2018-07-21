@@ -118,7 +118,10 @@ class App extends Component {
       //Make search string
       let search = 'https://en.wikipedia.org/w/api.php?action=query&origin=*&prop=pageimages|description&format=json&formatversion=2&pageids=3969'
       for (let i = 0; i < this.tempWikiDataIndex.length; i++) {
-          search = search + this.tempWikiDataIndex[i] + '|'
+          search = search + this.tempWikiDataIndex[i]
+          if (i < (this.tempWikiDataIndex.length - 1)) {
+              search = search + `|`
+          }
       }
       console.log(search)
       //do async API request
