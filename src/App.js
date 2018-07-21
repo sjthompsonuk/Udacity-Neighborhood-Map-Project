@@ -117,15 +117,17 @@ class App extends Component {
   getAdditionalWikiData = async () => {
       //Make search string
       let search = 'https://en.wikipedia.org/w/api.php?action=query&origin=*&prop=pageimages|description&format=json&formatversion=2&pageids=3969'
-      //for (let i = 0; i < this.tempWikiDataIndex.length; i++) {
-    //      search = search + this.tempWikiDataIndex[i] + '|'
-     // }
+      for (let i = 0; i < this.tempWikiDataIndex.length; i++) {
+          search = search + this.tempWikiDataIndex[i] + '|'
+      }
       console.log(search)
       //do async API request
       try {
-          const api_call = await fetch(`search`)
+          const api_call = await fetch(`${search}`, {
+          })
           let data = await api_call.json()
           console.log(data)
+
 
 
       } catch (error) {console.log(error)}
