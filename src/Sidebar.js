@@ -19,6 +19,9 @@ class Sidebar extends Component {
               )
             ))}
         </ul>
+        <footer>
+        Credit: Data provided by <a href="https://maps.google.com">Google Maps</a>, <a href="https://www.wikipedia.org">Wikipedia</a> and <a href="https://commons.wikimedia.org">Wikimedia Commons</a>
+        </footer>
       </div>
     )
   }
