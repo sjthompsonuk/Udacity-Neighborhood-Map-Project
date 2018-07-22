@@ -5,23 +5,41 @@ padding: 0;
 }
 
 /*For Google Maps to render correctly*/
-#root, #app, #map {
+#root, #app {
   height: 100%;
 }
 
 /*App*/
 #app {
     display: flex;
+    flex-wrap: wrap;
 }
+
+/*Header*/
+header {
+    width: 100%;
+    height: 10%;
+}
+
+/*Footer*/
+footer {
+    width: 100%;
+    height: 5%;
+}
+
+
 
 /*Sidebar*/
 
 .sidebar {
     width: 30%;
+    height: 85%;
 }
 
 /*Mapview - note ID map not class*/
 
 #map {
     width: 70%;
+    height: 85%;
+
 }
