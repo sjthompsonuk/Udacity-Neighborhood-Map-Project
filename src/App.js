@@ -59,30 +59,36 @@ class App extends Component {
   }
   //Google API requests
   getData = async (entry) => {
-      //API request here and map searchPlaces into placesData
-      const api_call = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${entry.title}&key=AIzaSyAQ8K05Bp11d0n6XLbb3eZd5vohjzGqWdU`)
-      const data = await api_call.json()
-      if (data.status === "OK") {
-          let item = entry
-          item.latlng = data.results[0].geometry.location
-          item.display = true
-          this.tempData.push(item)
-          //Check if searches all returned and entered into tempData before updating App
-          if (this.tempData.length === this.state.places.length) {
-              //Tag items with id number matching order in array (to match marker id)
-              for (let i =0; i < this.tempData.length; i++) {
-                  this.tempData[i].id = i
+
+      try {
+          //API request here and map searchPlaces into placesData
+          const api_call = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${entry.title}&key=AIzaSyAQ8K05Bp11d0n6XLbb3eZd5vohjzGqWdU`)
+          const data = await api_call.json()
+          if (data.status === "OK") {
+              let item = entry
+              item.latlng = data.results[0].geometry.location
+              item.display = true
+              this.tempData.push(item)
+              //Check if searches all returned and entered into tempData before updating App
+              if (this.tempData.length === this.state.places.length) {
+                  //Tag items with id number matching order in array (to match marker id)
+                  for (let i =0; i < this.tempData.length; i++) {
+                      this.tempData[i].id = i
+                  }
+                  this.googleComplete = true
+                  // Dont allow to setState until wiki also ready then do together
+                  if (this.wikiComplete === true) {
+                      console.log('wiki api finished first')
+                      this.mergeApiData()
+                  }
               }
-              this.googleComplete = true
-              // Dont allow to setState until wiki also ready then do together
-              if (this.wikiComplete === true) {
-                  console.log('wiki api finished first')
-                  this.mergeApiData()
-              }
+          } else {
+              alert(`There was an error with the Google API ${data.status}`)
           }
-      } else {
-          alert(`There was an error with the Google API ${data.status}`)
-      }
+      } catch (error) {console.log(error)}
+
+      //TODO Error hndling improvements
+
   }
 
   //Wiki API requests

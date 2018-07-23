@@ -93,11 +93,13 @@ class MapView extends React.Component {
       let place = this.props.places[id]
       let wikiUrl = 'https://en.wikipedia.org/wiki/' + place.urlTitle
       let contentString = ''
+      contentString += `<div class=infowindow>`
       //picture is loaded 200px wide
-      contentString += `<div><img alt="picture of ${place.urlTitle}" src="${place.urlImage}""></div>`
+      contentString += `<div class="placeimage"><img id="placeimage" alt="picture of ${place.urlTitle}" src="${place.urlImage}""></div>`
       contentString += `<h4><a href="${wikiUrl}">${place.urlTitle}</a></h4>`
       contentString += `<p>${place.description}</p>`
-      contentString += (`<p>Credit: ${place.credit}</p>`)
+      contentString += (`<p class="credit">Credit: ${place.credit}</p>`)
+      contentString += `</div>`
 
       return (contentString)
   }
