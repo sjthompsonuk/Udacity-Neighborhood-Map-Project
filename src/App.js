@@ -20,6 +20,8 @@ class App extends Component {
   wikiComplete = false
   googleComplete = false
   wikiDataCount = 0
+  //Preload images
+  images = []
 
   updateQuery = (query) => {
       this.setState({
@@ -157,12 +159,15 @@ class App extends Component {
 
   addWikiMediaImages = async (item) => {
       //Make search string
-      // File:The_Shard_in_March_2017_(cropped).jpg
       let search = 'https://commons.wikimedia.org/w/api.php?action=query&format=json&origin=*&prop=imageinfo&iiurlwidth=200&iiprop=url|extmetadata&titles=File:'
       try {
           const api_call = await fetch(search + item.image)
           let data = await api_call.json()
           for (let key in data.query.pages) {
+              //Preload image
+              let image = new Image()
+              image.src = data.query.pages[key].imageinfo[0].thumburl
+              this.images.push(image)
               item.urlImage = data.query.pages[key].imageinfo[0].thumburl
               item.credit = data.query.pages[key].imageinfo[0].extmetadata.Artist.value
           }
