@@ -163,7 +163,7 @@ class App extends Component {
 
   addWikiMediaImages = async (item) => {
       //Make search string
-      let search = 'https://commons.wikimedia.org/w/api.php?action=query&format=json&origin=*&prop=imageinfo&iiurlwidth=200&iiprop=url|extmetadata&titles=File:'
+      let search = 'https://commons.wikimedia.org/w/api.php?action=query&format=json&origin=*&prop=imageinfo&iiurlwidth=400&iiprop=url|extmetadata&titles=File:'
       try {
           const api_call = await fetch(search + item.image)
           let data = await api_call.json()

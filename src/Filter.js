@@ -16,7 +16,9 @@ class Filter extends Component {
         <div className="filter">
           <form>
             <input type="text" placeholder="Type to filter" value={this.props.query} onChange={this.filter}/>
-            <button type="button" onClick={this.resetFilter}>Clear Filter</button>
+            <div>
+              <button type="button" onClick={this.resetFilter}>Clear Filter</button>
+            </div>
           </form>
         </div>
     )
