@@ -14,7 +14,6 @@ class List extends Component {
   }
 
   render() {
-      //TODO On click or enter key
     return (
       <li className='list' tabIndex='0' onKeyDown={this.handleKeyEvent} onClick={this.listClick}>
         {this.props.place.urlTitle}
