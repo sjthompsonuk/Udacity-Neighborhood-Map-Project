@@ -98,7 +98,7 @@ class MapView extends React.Component {
       contentString += `<div class="placeimage"><img id="placeimage" alt="picture of ${place.urlTitle}" src="${place.urlImage}""></div>`
       contentString += `<h4><a href="${wikiUrl}">${place.urlTitle}</a></h4>`
       contentString += `<p>${place.description}</p>`
-      contentString += (`<p class="credit">Credit: ${place.credit}</p>`)
+      contentString += (`<p class="credit">Image: ${place.credit}</p>`)
       contentString += `</div>`
 
       return (contentString)
