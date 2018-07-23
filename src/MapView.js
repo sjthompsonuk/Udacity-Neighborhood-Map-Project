@@ -86,6 +86,8 @@ class MapView extends React.Component {
             })
           }
       }
+
+      this.accessibleMap()
   }
 
   createContentString = (id) => {
@@ -114,14 +116,45 @@ class MapView extends React.Component {
       styles: MapOptions
     })
 
+    window.google.maps.event.addListener(this.map, "tilesloaded", this.accessibleMap())
+
     this.infowindow = new window.google.maps.InfoWindow()
     this.bounds = new window.google.maps.LatLngBounds()
 
   }
 
+  accessibleMap = () => {
+      //Remove map div from tabindex - other than iframe
+      let googleTab = document.querySelector('#map div [tabindex="0"]')
+      if (googleTab !== null) {
+          googleTab.tabIndex = -1
+          googleTab.title = "mug"
+      }
+      //Add A11y iframe title
+      let frame = document.querySelector('iframe')
+      if (frame !== null) {
+          frame.title = "Google Map displaying listed iconic London landmarks"
+      }
+      // Remove focus from map links
+      let googleLinks = document.querySelectorAll('#map a')
+      if (googleLinks !== null) {
+        [].slice.apply(googleLinks).forEach(function(item) {
+          item.setAttribute('tabindex','-1')
+        })
+      }
+      //Re-add focus to infoWindow Links
+      let infowindowLinks = document.querySelectorAll('.gm-style-iw a')
+      console.log(infowindowLinks)
+      if (infowindowLinks !== null) {
+        [].slice.apply(infowindowLinks).forEach(function(item) {
+          item.setAttribute('tabindex','0')
+        })
+      }
+  }
+
   render() {
     return (
-        <div id='map' />
+        <div id='map' aria-label='Google Map displaying listed Iconic London Landmarks'/>
     )
   }
 }

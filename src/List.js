@@ -7,9 +7,16 @@ class List extends Component {
       this.props.updateActiveMarker(this.props.place.id)
   }
 
+  handleKeyEvent = (e) => {
+    if(e.key === 'Enter') {
+      this.props.updateActiveMarker(this.props.place.id)
+    }
+  }
+
   render() {
+      //TODO On click or enter key
     return (
-      <li className='list' onClick={this.listClick}>
+      <li className='list' tabIndex='0' onKeyDown={this.handleKeyEvent} onClick={this.listClick}>
         {this.props.place.urlTitle}
       </li>
     )

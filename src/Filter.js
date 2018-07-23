@@ -14,8 +14,8 @@ class Filter extends Component {
   render() {
     return (
         <div className="filter">
-          <form>
-            <input type="text" placeholder="Type to filter" value={this.props.query} onChange={this.filter}/>
+          <form aria-label="Filter the list">
+            <input type="text" placeholder="Type to filter" aria-label="Type to filter" value={this.props.query} onChange={this.filter}/>
             <div>
               <button type="button" onClick={this.resetFilter}>Clear Filter</button>
             </div>
