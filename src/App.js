@@ -50,7 +50,6 @@ class App extends Component {
   getAllData = () => {
       console.log('async getData call for each place')
       this.tempData = []
-      //TODO If problems matching up later it could be this bit
       this.tempWikiData = this.state.places
       for (let i = 0; i < this.state.places.length; i++) {
           //Google API requests
@@ -85,11 +84,14 @@ class App extends Component {
                   }
               }
           } else {
-              alert(`There was an error with the Google API ${data.status}`)
+              alert(`There was an error with the Google API return`)
+              console.log(data.status)
+              console.log(data)
           }
-      } catch (error) {console.log(error)}
-
-      //TODO Error hndling improvements
+      } catch (error) {
+          alert('Sorry there was a problem retreiving data from the Google Maps API - try again later. See console for more detail')
+          console.log(error)
+      }
 
   }
 
@@ -110,9 +112,10 @@ class App extends Component {
               this.getAdditionalWikiData()
           }
 
-      } catch (error) {console.log(error)}
-
-      //TODO add better error handling
+      } catch (error) {
+          alert('Sorry there was a problem retreiving data from Wikipedia - try again later. See console for more detail')
+          console.log(error)
+      }
 
   }
 
@@ -125,7 +128,6 @@ class App extends Component {
               search = search + `|`
           }
       }
-      console.log(search)
       //do async API request
       try {
           const api_call = await fetch(`${search}`)
@@ -147,8 +149,10 @@ class App extends Component {
           }
           this.addWikiMediaImagesAll()
 
-      } catch (error) {console.log(error)}
-      //TODO add better error handling
+      } catch (error) {
+          alert('Sorry there was a problem retreiving data from Wikipedia - try again later. See console for more detail')
+          console.log(error)
+      }
   }
 
   addWikiMediaImagesAll = () => {
@@ -181,8 +185,10 @@ class App extends Component {
               }
           }
 
-      } catch (error) {console.log(error)}
-      //TODO improve error handling
+      } catch (error) {
+          alert('Sorry there was a problem retreiving data from Wikimedia - try again later. See console for more detail')
+          console.log(error)
+      }
 
   }
 
