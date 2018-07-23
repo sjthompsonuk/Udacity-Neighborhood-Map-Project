@@ -1,5 +1,6 @@
 import React from 'react';
 import './index.css';
+import MapOptions from './MapOptions.json'
 
 class MapView extends React.Component {
     //Acts like the google maps callback init function
@@ -31,6 +32,7 @@ class MapView extends React.Component {
               map: this.map,
               position: position,
               title: title,
+              mapOptions: MapOptions.json,
               //animation: window.google.maps.Animation.DROP,
               id: i,
               //ghost property to keep same length marker array for list matching
@@ -101,7 +103,9 @@ class MapView extends React.Component {
     this.map = new window.google.maps.Map(document.getElementById('map'), {
       center: {lat: 51.5, lng: -0.11},
       zoom: 12,
-      mapTypeId: 'roadmap',
+      //mapTypeId: 'roadmap',
+      disableDefaultUI: true,
+      styles: MapOptions
     })
 
     this.infowindow = new window.google.maps.InfoWindow()

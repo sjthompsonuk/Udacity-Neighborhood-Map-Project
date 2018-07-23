@@ -2,21 +2,13 @@ import React, { Component } from 'react';
 import './index.css'
 import MapView from './MapView'
 import Sidebar from './Sidebar'
+import Places from './Places.json'
 
 class App extends Component {
 
   state = {
     // Here add titles, which become the search strings in both Maps API and Wiki API
-    places: [
-        {title: 'The Tower of London'},
-        {title: 'Big Ben'},
-        {title: 'Buckingham Palace'},
-        {title: 'The Shard'},
-        {title: 'The British Museum London'},
-        {title: 'London Bridge'},
-        {title: 'The Ritz in London'},
-        {title: 'The Savoy in London'}
-    ],
+    places: Places,
     activeMarker: null,
     query: ''
   }
