@@ -203,12 +203,14 @@ class App extends Component {
     return (
       <div id="app">
         <header>
-          <h2>Iconic London Landmarks</h2>
+          <h3>Iconic London Landmarks</h3>
         </header>
         <Sidebar query={this.state.query} updateQuery={this.updateQuery} updateActiveMarker={this.updateActiveMarker} places={this.state.places} populateInfoWindow={this.populateInfoWindow} />
         <MapView activeMarker={this.state.activeMarker} updateActiveMarker={this.updateActiveMarker} places={this.state.places} populateInfoWindow={this.populateInfoWindow} />
         <footer>
-          © Sam Thompson 2018 | Data: <a href="https://maps.google.com">Google Maps</a>, <a href="https://www.wikipedia.org">Wikipedia</a> and <a href="https://commons.wikimedia.org">Wikimedia Commons</a>
+          <p>
+            © Sam Thompson 2018 | Data:<a href="https://maps.google.com">Google Maps</a>|<a href="https://www.wikipedia.org">Wikipedia</a>|<a href="https://commons.wikimedia.org">Wikimedia Commons</a>
+          </p>
         </footer>
       </div>
     )
