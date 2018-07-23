@@ -71,6 +71,9 @@ class MapView extends React.Component {
       if (id !== null) {
           let marker = this.markers[id]
           marker.setAnimation(window.google.maps.Animation.BOUNCE)
+          window.setTimeout(function() {
+            marker.setAnimation(null)
+        }, 1000)
           if (this.infowindow.marker !== marker) {
             this.infowindow.marker = marker
             this.infowindow.setContent(this.createContentString(id))
