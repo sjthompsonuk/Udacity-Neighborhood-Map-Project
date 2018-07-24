@@ -12,6 +12,13 @@ The app is not in the build state, so to view it:
 * Run `npm install` - the basic react-create-app dependencies only, there are no additional dependencies required
 * Run `npm start` - for the built in server, which will automatically load.
 
+### Creating the build state
+
+When ready to deploy to a server:
+
+* Run `npm run build`
+* Then deploy to server as required. You could use Heroku or Digital Ocean if needed.
+
 ## Functionality
 
 The App is fairly simple:
@@ -23,6 +30,10 @@ The App is fairly simple:
 * To filter the listed landmarks, simply type in the filter input textbox. Entries will be automatically converted to lower case.
 
 * Clicking the 'clear filter' button will remove filter text, close any open information window and all Landmarks will display.
+
+## Service Worker
+
+The app has a built in Service Worker, so any cached pages will be served first, before any online code is returned. This should provide a better user experience.
 
 ## Attribution
 
