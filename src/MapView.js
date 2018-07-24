@@ -109,8 +109,6 @@ class MapView extends React.Component {
             // from customised JSON
             styles: MapOptions
         })
-        // Adjust A11y
-        window.google.maps.event.addListener(this.map, "tilesloaded", this.accessibleMap())
         // Init infowindow and bounds
         this.infowindow = new window.google.maps.InfoWindow()
         this.bounds = new window.google.maps.LatLngBounds()
@@ -119,27 +117,27 @@ class MapView extends React.Component {
     accessibleMap = () => {
         //Remove map div from tabindex - other than iframe
         let googleTab = document.querySelector('#map div [tabindex="0"]')
-        if (googleTab !== null) {
+        if ((googleTab !== null) && (googleTab !== undefined)) {
             googleTab.tabIndex = -1
         }
           //Add A11y iframe title
           let frame = document.querySelector('iframe')
-          if (frame !== null) {
+          if ((frame !== null) && (frame !== undefined)) {
               frame.title = "Google Map displaying listed iconic London landmarks"
           }
           // Remove focus from map links
           let googleLinks = document.querySelectorAll('#map a')
-          if (googleLinks !== null) {
-              [].slice.apply(googleLinks).forEach(function(item) {
-                  item.setAttribute('tabindex','-1')
-              })
+          if ((googleLinks !== null) && (googleLinks !== undefined)) {
+             // [].slice.apply(googleLinks).forEach(function(item) {
+            //      item.setAttribute('tabindex','-1')
+            //  })
           }
           //Re-add focus to infoWindow Links
           let infowindowLinks = document.querySelectorAll('.gm-style-iw a')
-          if (infowindowLinks !== null) {
-              [].slice.apply(infowindowLinks).forEach(function(item) {
-                  item.setAttribute('tabindex','0')
-              })
+          if ((infowindowLinks !== null) && (infowindowLinks !== undefined)) {
+            //  [].slice.apply(infowindowLinks).forEach(function(item) {
+            //      item.setAttribute('tabindex','0')
+            //  })
           }
       }
 
