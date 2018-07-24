@@ -210,7 +210,7 @@ class App extends Component {
 
       render() {
           return (
-              <div id="app">
+              <main id="app">
                   <header>
                       <h3>Iconic London Landmarks</h3>
                   </header>
@@ -221,7 +221,7 @@ class App extends Component {
                           © Sam Thompson 2018 | Data:<a href="https://maps.google.com">Google Maps</a>|<a href="https://www.wikipedia.org">Wikipedia</a>|<a href="https://commons.wikimedia.org">Wikimedia Commons</a>
                       </p>
                   </footer>
-            </div>
+            </main>
         )
     }
 }
